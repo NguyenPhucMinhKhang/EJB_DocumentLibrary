@@ -6,7 +6,7 @@
   + Installing GlassFish 5 on Community Server Connectors
   + Install the Community Server Connectors and Maven for Java extension in Visual Studio Code
 
-**2. Setting the setting.js:** "rsp-ui.rsp.java.home": "C:\\Program Files\\Java\\jdk-24" (the jdk version must be at least 20)
+**2. Setting the setting.json:** "rsp-ui.rsp.java.home": "C:\\Program Files\\Java\\jdk-24" (the jdk version must be at least 20)
 
 **3. Edit the GlassFish server:**
   + From the "Server" tab, start the server and right click to Create a New Server.
