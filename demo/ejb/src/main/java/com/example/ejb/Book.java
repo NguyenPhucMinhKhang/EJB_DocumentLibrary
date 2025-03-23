@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Book {
@@ -13,12 +14,16 @@ public class Book {
     private String title;
     private String author;
 
+    @ManyToOne
+    private Category category;
+
     public Book() {
     }
 
-    public Book(String title, String author) {
+    public Book(String title, String author, Category category) {
         this.title = title;
         this.author = author;
+        this.category = category;
     }
 
     // Getters and setters
@@ -44,5 +49,13 @@ public class Book {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

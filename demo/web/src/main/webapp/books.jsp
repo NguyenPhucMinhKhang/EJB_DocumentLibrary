@@ -12,14 +12,16 @@
   <ul>
     <c:choose>
       <c:when test="${not empty books}">
-        <c:forEach var="book" items="${books}">
-          <li>${book.title} by ${book.author}</li>
-        </c:forEach>
+      <c:forEach var="book" items="${books}">
+        <li>${book.title} - ${book.category.getName()} by ${book.author}</li>
+      </c:forEach>
       </c:when>
       <c:otherwise>
-        <li>No books available.</li>
+      <li>No books available.</li>
       </c:otherwise>
     </c:choose>
+    <br>
+    <button onclick="location.href='books/add'">Add New Book</button>
   </ul>
 </body>
 
