@@ -6,8 +6,6 @@ import com.example.ejb.Category;
 import com.example.ejb.CategoryBean;
 
 import javax.ejb.EJB;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,17 +22,6 @@ public class BookAddServlet extends HttpServlet {
 
     @EJB
     private CategoryBean categoryBean;
-
-    @Override
-    public void init() throws ServletException {
-        try {
-            InitialContext ic = new InitialContext();
-            bookBean = (BookBean) ic.lookup("java:global/demo-web-1.0/BookBean");
-            categoryBean = (CategoryBean) ic.lookup("java:global/demo-web-1.0/CategoryBean");
-        } catch (NamingException e) {
-            throw new ServletException(e);
-        }
-    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

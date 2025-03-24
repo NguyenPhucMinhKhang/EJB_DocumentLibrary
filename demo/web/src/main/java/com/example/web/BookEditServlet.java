@@ -37,10 +37,6 @@ public class BookEditServlet extends HttpServlet {
             Book book = bookBean.findBookById(bookId);
 
             List<Category> categories = categoryBean.getAllCategories();
-            if (categories == null) {
-                response.sendRedirect(request.getContextPath() + "/books/add?error=noCategories");
-                return;
-            }
 
             request.setAttribute("categories", categories);
             request.setAttribute("book", book);
