@@ -9,11 +9,37 @@
 
 <body>
   <h1>Book List</h1>
+  <c:if test="${not empty param.error}">
+    <div style="color: red;">
+      <c:choose>
+        <c:when test="${param.error == 'missingId'}">Error: Missing book ID.</c:when>
+        <c:when test="${param.error == 'invalidId'}">Error: Invalid book ID.</c:when>
+        <c:when test="${param.error == 'bookNotFound'}">Error: Book not found.</c:when>
+      </c:choose>
+    </div>
+  </c:if>
+  <c:if test="${not empty param.success}">
+    <div style="color: green;">
+      <c:choose>
+        <c:when test="${param.success == 'bookDeleted'}">Success: Book deleted.</c:when>
+      </c:choose>
+    </div>
+  </c:if>
   <ul>
     <c:choose>
       <c:when test="${not empty books}">
       <c:forEach var="book" items="${books}">
-        <li>${book.title} - ${book.category.getName()} by ${book.author}</li>
+        <li>
+        <strong>${book.title}</strong> by ${book.author} <br>
+        <em>Category:</em> ${book.category.getName()} <br>
+        <em>ID:</em> ${book.id} <br>
+        <form action="<%= request.getContextPath() %>/books/delete" method="post" style="display:inline;">
+          <input type="hidden" name="id" value="${book.id}">
+          <button type="submit">Delete</button>
+        </form>
+        <button onclick="location.href='books/edit?id=${book.id}'">Update</button>
+        </li>
+        <hr>
       </c:forEach>
       </c:when>
       <c:otherwise>
@@ -26,4 +52,3 @@
 </body>
 
 </html>
-</Book>
