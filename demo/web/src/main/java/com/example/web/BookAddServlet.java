@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/books/add")
-public class AddBookServlet extends HttpServlet {
+public class BookAddServlet extends HttpServlet {
 
     @EJB
     private BookBean bookBean;
@@ -38,11 +38,6 @@ public class AddBookServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (categoryBean == null) {
-            response.sendRedirect(request.getContextPath() + "/books/add?error=categoryBeanUnavailable");
-            return;
-        }
-
         List<Category> categories = categoryBean.getAllCategories();
         if (categories == null) {
             response.sendRedirect(request.getContextPath() + "/books/add?error=noCategories");
@@ -50,36 +45,23 @@ public class AddBookServlet extends HttpServlet {
         }
 
         request.setAttribute("categories", categories);
-        request.getRequestDispatcher("/addBook.jsp").forward(request, response);
+        request.getRequestDispatcher("/bookAdd.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (categoryBean == null) {
-            response.sendRedirect(request.getContextPath() + "/books/add?error=categoryBeanUnavailable");
-            return;
-        }
-
+        // Generate a new ID for the book
+        Long id = System.currentTimeMillis();
         String title = request.getParameter("title");
         String author = request.getParameter("author");
         String categoryName = request.getParameter("category");
-
-        if (title == null || author == null || categoryName == null) {
-            response.sendRedirect(request.getContextPath() + "/books/add?error=missingParameters");
-            return;
-        }
 
         Category category = categoryBean.getAllCategories().stream()
                 .filter(c -> c.getName().equals(categoryName))
                 .findFirst()
                 .orElse(null);
 
-        if (category == null) {
-            response.sendRedirect(request.getContextPath() + "/books/add?error=invalidCategory");
-            return;
-        }
-
-        Book book = new Book(title, author, category);
+        Book book = new Book(id, title, author, category);
         bookBean.addBook(book);
 
         response.sendRedirect(request.getContextPath() + "/books");

@@ -34,4 +34,11 @@ public class CategoryBean {
                 .findFirst()
                 .orElse(null);
     }
+
+    public Category findCategoryByName(String name) {
+        return categories.stream()
+                .filter(category -> category.getName().equals(name))
+                .findFirst()
+                .orElse(null);
+    }
 }
