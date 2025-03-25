@@ -25,6 +25,15 @@
       </c:choose>
     </div>
   </c:if>
+  <form action="<%= request.getContextPath() %>/books/filter" method="get">
+    <label for="category">Filter by Category:</label>
+    <select name="category" id="category">
+      <c:forEach var="category" items="${categories}">
+        <option value="${category.id}">${category.name}</option>
+      </c:forEach>
+    </select>
+    <button type="submit">Filter</button>
+  </form>
   <ul>
     <c:choose>
       <c:when test="${not empty books}">

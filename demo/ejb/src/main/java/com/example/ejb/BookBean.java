@@ -48,10 +48,10 @@ public class BookBean {
         return books;
     }
     
-    public List<Book> getBooksByCategory(Category category) {
+    public List<Book> getBooksByCategoryId(Long categoryId) {
         List<Book> result = new ArrayList<>();
         for (Book book : books) {
-            if (book.getCategory().equals(category)) {
+            if (book.getCategory().getId().equals(categoryId)) {
                 result.add(book);
             }
         }
