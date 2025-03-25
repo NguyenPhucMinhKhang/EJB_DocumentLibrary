@@ -25,9 +25,10 @@
       </c:choose>
     </div>
   </c:if>
-  <form action="<%= request.getContextPath() %>/books/filter" method="get">
+  <form action="<%= request.getContextPath() %>/books" method="get">
     <label for="category">Filter by Category:</label>
     <select name="category" id="category">
+      <option value="all">ALL</option>
       <c:forEach var="category" items="${categories}">
         <option value="${category.id}">${category.name}</option>
       </c:forEach>

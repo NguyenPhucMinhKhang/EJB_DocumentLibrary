@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/books")
@@ -34,11 +35,17 @@ public class BookServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Book> books = bookBean.getAllBooks();
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String categoryId = request.getParameter("category");
+        List<Book> books = new ArrayList<>();
+        if (categoryId == null || categoryId.equals("all")) {
+            books = bookBean.getAllBooks();
+        } else {
+            books = bookBean.getBooksByCategoryId(Long.parseLong(categoryId));
+        }
         List<Category> categories = categoryBean.getAllCategories();
-        req.setAttribute("categories", categories);
-        req.setAttribute("books", books);
-        req.getRequestDispatcher("books.jsp").forward(req, resp);
+        request.setAttribute("categories", categories);
+        request.setAttribute("books", books);
+        request.getRequestDispatcher("/books.jsp").forward(request, response);
     }
 }
